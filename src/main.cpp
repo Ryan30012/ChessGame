@@ -16,13 +16,23 @@ sf::Vector2i getMousePositionInGrid(const sf::RenderWindow& window, const sf::Ev
     return sf::Vector2i((mousePos.x / 100), (mousePos.y / 100));
 }
 
+void updateBoard(sf::RenderWindow& window, Board& board)
+{
+    window.clear(sf::Color::Black);
+    board.draw();
+    window.display();
+}
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Project");
     window.setFramerateLimit(144);
 
-    Tile tile({0.f, 0.f}, TileType::Active);
-    Piece piece((sf::Vector2f) {0.f, 0.f},Chess::PieceColor::Black, Chess::PieceType::Rook);
+    //Tile tile({0.f, 0.f}, TileType::Active);
+    //Piece piece((sf::Vector2f) {0.f, 0.f},Chess::PieceColor::Black, Chess::PieceType::Rook);
+
+    Board board(window);
+
 
     while (window.isOpen())
     {
@@ -37,15 +47,14 @@ int main()
                 {
                     // Get mouse position in Grid coordinates
                     sf::Vector2i gridPosFct = getMousePositionInGrid(window, mouseEvent);
+                    board.clickHandler(gridPosFct);
                 }
-
+                updateBoard(window, board);
             }
         }
         
         window.clear(sf::Color::Black);
-        Chess::CreateBackGround(window);
-        window.draw(tile.getShape());
-        piece.draw(window);
+        board.draw();
         window.display();
     }
     
