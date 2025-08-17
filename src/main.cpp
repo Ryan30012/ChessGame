@@ -35,13 +35,8 @@ int main()
             {
                 if (mouseEvent->button == sf::Mouse::Button::Left)
                 {
+                    // Get mouse position in Grid coordinates
                     sf::Vector2i gridPosFct = getMousePositionInGrid(window, mouseEvent);
-                    // Get mouse position in window coordinates
-                    sf::Vector2i mousePos(window.mapPixelToCoords(sf::Vector2i(mouseEvent->position)));
-                    sf::Vector2i gridPos((mousePos.x / 100), (mousePos.y / 100));
-                    std::cout << "Mouse clicked at: " << mousePos.x << ", " << mousePos.y << std::endl;
-                    std::cout << "Mouse clicked at: " << gridPos.x << ", " << gridPos.y << std::endl;
-                    std::cout << "Mouse clicked at: " << gridPosFct.x << ", " << gridPosFct.y << std::endl;
                 }
 
             }
