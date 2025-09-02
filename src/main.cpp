@@ -2,8 +2,10 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 
+using namespace std::chrono_literals;
 
-void HandlingUIMenu(bool& startGame) {
+
+bool HandlingUIMenu() {
     sf::RenderWindow ui_menu(sf::VideoMode({800u, 800u}), "Chess Game");
     ui_menu.setFramerateLimit(144);
 
@@ -11,15 +13,16 @@ void HandlingUIMenu(bool& startGame) {
     while (ui_menu.isOpen())
     {
         while(const std::optional event = ui_menu.waitEvent(500ms)) {
-            if (event->is<sf::Event::Closed>())
+            if (event->is<sf::Event::Closed>()) {
                 ui_menu.close();
-
+                return true;
+            }
 
             if (const auto* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>())
             {
                 if (mouseEvent->button == sf::Mouse::Button::Left)
                 {
-                    cout << "Left Mouse Button Clicked" << std::endl;
+                    std::cout << "Left Mouse Button Clicked" << std::endl;
                 }
             }
         }
@@ -27,19 +30,23 @@ void HandlingUIMenu(bool& startGame) {
         ui_menu.clear(sf::Color::Black);
         ui_menu.display();
     }
+
+    return true;
 } 
 
 int main()
 {
 
     // Opening the UI menu window
-    bool start_game = false;
-    HandlingUIMenu(start_game);
-    if (!start_game) {
+    if (!HandlingUIMenu()) {
         return 1;
     }
 
     std::cout << "UI Menu closed" << std::endl;
+
+    int val;
+
+    std::cin >>  val;
 
     /*
     sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Game");
