@@ -1,21 +1,49 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
-#include "ChessConstants.hpp"
 
-using namespace Chess;
-using namespace std::chrono_literals;
 
-#include "Board.hpp"
-#include "Tile.hpp"
-#include "Piece.hpp"
+void HandlingUIMenu(bool& startGame) {
+    sf::RenderWindow ui_menu(sf::VideoMode({800u, 800u}), "Chess Game");
+    ui_menu.setFramerateLimit(144);
+
+
+    while (ui_menu.isOpen())
+    {
+        while(const std::optional event = ui_menu.waitEvent(500ms)) {
+            if (event->is<sf::Event::Closed>())
+                ui_menu.close();
+
+
+            if (const auto* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>())
+            {
+                if (mouseEvent->button == sf::Mouse::Button::Left)
+                {
+                    cout << "Left Mouse Button Clicked" << std::endl;
+                }
+            }
+        }
+        
+        ui_menu.clear(sf::Color::Black);
+        ui_menu.display();
+    }
+} 
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Project");
-    window.setFramerateLimit(144);
 
-    Board board(window);
+    // Opening the UI menu window
+    bool start_game = false;
+    HandlingUIMenu(start_game);
+    if (!start_game) {
+        return 1;
+    }
+
+    std::cout << "UI Menu closed" << std::endl;
+
+    /*
+    sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Game");
+    window.setFramerateLimit(144);
 
 
     while (window.isOpen())
@@ -34,9 +62,9 @@ int main()
             }
         }
         
-        window.clear(sf::Color::Black);
-        window.display();
+        ui_menu.clear(sf::Color::Black);
+        ui_menu.display();
     }
     
-    return 0;
+    return 0;*/
 }
