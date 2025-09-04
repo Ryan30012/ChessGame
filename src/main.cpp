@@ -5,6 +5,21 @@
 using namespace std::chrono_literals;
 
 
+bool isMouseonBtn(sf::RenderWindow& win, sf::RectangleShape btn) {
+    sf::Vector2i mousePos = sf::Mouse::getPosition(win);
+
+    sf::Vector2i btn_size = sf::Vector2i(btn.getSize());
+    sf::Vector2i btn_Xbounds = sf::Vector2i({(int) btn.getPosition().x, (int) btn.getPosition().x + btn_size.x});
+    sf::Vector2i btn_Ybounds = sf::Vector2i({(int) btn.getPosition().y, (int) btn.getPosition().y + btn_size.y});
+
+    if (mousePos.x > btn_Xbounds.x && mousePos.x < btn_Xbounds.y
+        && mousePos.y > btn_Ybounds.x && mousePos.y < btn_Ybounds.y)
+        return true;
+    else
+        return false;
+}
+
+
 bool HandlingUIMenu() {
     sf::RenderWindow ui_menu(sf::VideoMode({800u, 800u}), "Chess Game");
     ui_menu.setFramerateLimit(144);
@@ -60,6 +75,21 @@ bool HandlingUIMenu() {
                 if (mouseEvent->button == sf::Mouse::Button::Left)
                 {
                     std::cout << "Left Mouse Button Clicked" << std::endl;
+                    if (isMouseonBtn(ui_menu, btn1_rect))
+                    {
+                        std::cout << "Clicked on btn1";
+                    }
+
+                    if (isMouseonBtn(ui_menu, btn2_rect))
+                    {
+                        std::cout << "Clicked on btn2";
+                    }
+
+                    if (isMouseonBtn(ui_menu, btnE_rect))
+                    {
+                        std::cout << "Clicked on btn3";
+                    }
+                    
                 }
             }
         }
@@ -81,6 +111,8 @@ bool HandlingUIMenu() {
 
     return true;
 } 
+
+
 
 int main()
 {
