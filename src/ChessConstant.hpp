@@ -16,9 +16,20 @@ namespace ChessConst {
         ACTIVE,
         MOVE,
         CHECK
-    }
+    };
 
-    const float WINDOW_SIZE = 800f; 
+    const float WINDOW_SIZE = 800f;
+
+    const float TILE_SIZE = 100f; // 1 / 8 of window size
+
+    enum PieceType {
+        PAWN,
+        ROOK,
+        KNIGHT,
+        BISHOP,
+        QUEEN,
+        KING
+    };
 
 }
 

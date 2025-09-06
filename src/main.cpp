@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "ChessConstant.hpp"
 
 using namespace std::chrono_literals;
-
+using namespace ChessConstant;
 
 bool isMouseonBtn(sf::RenderWindow& win, sf::RectangleShape btn) {
     sf::Vector2i mousePos = sf::Mouse::getPosition(win);
