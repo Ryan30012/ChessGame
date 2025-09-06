@@ -14,9 +14,6 @@ FetchContent_MakeAvailable(SFML)
 # Main executable
 add_executable(ChessGame 
     src/main.cpp
-    src/Tile.cpp
-    src/Piece.cpp
-    src/Board.cpp
 )
 target_compile_features(ChessGame PRIVATE cxx_std_17)
 target_link_libraries(ChessGame PRIVATE sfml-graphics sfml-window)
