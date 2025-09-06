@@ -19,8 +19,17 @@ bool isMouseonBtn(sf::RenderWindow& win, sf::RectangleShape btn) {
         return false;
 }
 
-
-bool HandlingUIMenu() {
+/*
+Function to open UI window and displaying the Main UI menu
+Main UI menu contains 3 buttons: "Player vs Player", "Player vs AI", "Exit"
+The function returns an INT {-1,1,2,3} depending on the different options selected
+Link Options to return Value:
+-Player vs Player ---> 1
+-Player vs AI ---> 2
+-Exit ---> 3
+-Error if the window closes without the user selecting ----> -1
+*/
+int HandlingUIMenu() {
     sf::RenderWindow ui_menu(sf::VideoMode({800u, 800u}), "Chess Game");
     ui_menu.setFramerateLimit(144);
 
@@ -77,17 +86,23 @@ bool HandlingUIMenu() {
                     std::cout << "Left Mouse Button Clicked" << std::endl;
                     if (isMouseonBtn(ui_menu, btn1_rect))
                     {
-                        std::cout << "Clicked on btn1";
+                        std::cout << "Clicked on btn1" << std::endl;
+                        ui_menu.close();
+                        return 1;
                     }
 
                     if (isMouseonBtn(ui_menu, btn2_rect))
                     {
-                        std::cout << "Clicked on btn2";
+                        std::cout << "Clicked on btn2" << std::endl;
+                        ui_menu.close();
+                        return 2;
                     }
 
                     if (isMouseonBtn(ui_menu, btnE_rect))
                     {
-                        std::cout << "Clicked on btn3";
+                        std::cout << "Clicked on btn3" << std::endl;
+                        ui_menu.close();
+                        return 3;
                     }
                     
                 }
@@ -109,7 +124,7 @@ bool HandlingUIMenu() {
         ui_menu.display();
     }
 
-    return true;
+    return -1;
 } 
 
 
@@ -118,9 +133,22 @@ int main()
 {
 
     // Opening the UI menu window
-    if (!HandlingUIMenu()) {
-        return 1;
+    int playing_Mode = HandlingUIMenu();
+    if (playing_Mode == -1) {
+        return -1;
     }
+    else if  (playing_Mode == 1){
+        std::cout << "Mode Chosen: Player vs Player" << std::endl;
+    }
+    else if  (playing_Mode == 2){
+        std::cout << "Mode Chosen: Player vs AI" << std::endl;
+    }
+    else if  (playing_Mode == 3){
+        std::cout << "Exit Game!" << std::endl;
+        return 0;
+    }
+
+    std::cin >> playing_Mode;
 
     /*
     sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Game");
