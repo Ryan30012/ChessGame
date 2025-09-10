@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include "ChessConstant.hpp"
+#include "Tile.hpp"
 
 using namespace std::chrono_literals;
 using namespace ChessConstant;
@@ -128,53 +129,61 @@ int HandlingUIMenu() {
     return -1;
 } 
 
-
-
 int main()
 {
 
     // Opening the UI menu window
     int playing_Mode = HandlingUIMenu();
+    
     if (playing_Mode == -1) {
         return -1;
     }
-    else if  (playing_Mode == 1){
-        std::cout << "Mode Chosen: Player vs Player" << std::endl;
-    }
-    else if  (playing_Mode == 2){
-        std::cout << "Mode Chosen: Player vs AI" << std::endl;
-    }
-    else if  (playing_Mode == 3){
-        std::cout << "Exit Game!" << std::endl;
-        return 0;
-    }
+    else if  (playing_Mode == 1){ // if mode is Player VS Player
+        sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Game");
+        window.setFramerateLimit(144);
 
-    std::cin >> playing_Mode;
-
-    /*
-    sf::RenderWindow window(sf::VideoMode({800u, 800u}), "Chess Game");
-    window.setFramerateLimit(144);
-
-
-    while (window.isOpen())
-    {
-        while(const std::optional event = window.waitEvent(500ms)) {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-
-
-            if (const auto* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>())
+        Tile tiles[8][8];
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
             {
-                if (mouseEvent->button == sf::Mouse::Button::Left)
-                {
-                    cout << "Left Mouse Button Clicked" << std::endl;
-                }
+                tiles[i][j].setTile(sf::Vector2f(j * 100, i * 100), ((i+j) % 2 == 0 ? TileColor::LIGHT : TileColor::DARK), TileType::DEFAULT);
             }
+            
         }
         
-        ui_menu.clear(sf::Color::Black);
-        ui_menu.display();
+
+        while (window.isOpen())
+        {
+            while(const std::optional event = window.waitEvent(500ms)) {
+                if (event->is<sf::Event::Closed>())
+                    window.close();
+
+
+                if (const auto* mouseEvent = event->getIf<sf::Event::MouseButtonPressed>())
+                {
+                    if (mouseEvent->button == sf::Mouse::Button::Left)
+                    {
+                        std::cout << "Left Mouse Button Clicked" << std::endl;
+                    }
+                }
+            }
+            
+            window.clear(sf::Color::Black);
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    tiles[i][j].draw(window);
+                }
+                
+            }
+            window.display();
+        }
     }
+
+    /*
     
-    return 0;*/
+    */
+    return 0;
 }
